@@ -6,6 +6,20 @@ import { Column, Entity } from 'typeorm';
 @Entity('users')
 export class User extends IEntity {
   @ApiProperty({
+    description: 'First name',
+    example: 'John',
+  })
+  @Column()
+  firstName: string;
+
+  @ApiProperty({
+    description: 'Last name',
+    example: 'Doe',
+  })
+  @Column()
+  lastName: string;
+
+  @ApiProperty({
     description: 'Email',
     example: 'test@test.com',
   })
@@ -44,6 +58,6 @@ export class User extends IEntity {
     description: 'Role',
     example: EUserRole.USER,
   })
-  @Column({ default: EUserRole.USER })
+  @Column({ default: EUserRole.USER, type: 'enum', enum: EUserRole })
   role: EUserRole;
 }

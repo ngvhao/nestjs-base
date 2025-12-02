@@ -23,7 +23,7 @@ export class AuthService {
     type: 'access' | 'refresh',
   ): Promise<string> {
     const isAccessToken = type === 'access';
-    return this.jwtService.sign(payload, {
+    return await this.jwtService.signAsync(payload, {
       secret: isAccessToken
         ? jwtConstants.accessSecret
         : jwtConstants.refreshSecret,
@@ -39,7 +39,6 @@ export class AuthService {
     refreshToken?: string,
   ): void {
     const isProduction = process.env.NODE_ENV === 'production';
-
     const baseCookieOptions: CookieOptions = {
       httpOnly: true,
       secure: isProduction,

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AuthRepository } from '../../infrastructure/repositories/auth.repository';
 import { AuthLoginDto } from '../dtos/auth.login.dto';
 import { AuthService } from '../services/auth.service';
@@ -20,7 +20,7 @@ export class LoginUseCase {
   ): Promise<{ accessToken: string; refreshToken: string }> {
     const user = await this.authRepo.findByEmail(dto.email);
     if (!user) {
-      throw new Error('User not found');
+      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
     const token = await this.authService.generateToken(
       {

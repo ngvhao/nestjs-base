@@ -1,4 +1,6 @@
+import * as dotenv from 'dotenv';
 import { DataSource, DataSourceOptions } from 'typeorm';
+dotenv.config();
 
 export const initDataSource = (): DataSourceOptions => {
   return {
@@ -8,11 +10,12 @@ export const initDataSource = (): DataSourceOptions => {
     username: process.env.DB_USER_NAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    synchronize: true,
+    synchronize: false,
     logging: false,
     entities: ['dist/**/*.entity.js'],
     migrations: ['dist/db/migrations/*.js'],
     cache: true,
+    ssl: true,
   };
 };
 
